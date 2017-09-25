@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
     int res = pcap_next_ex(handle, &header, &packet);  //packet check start
     if (res == 0) continue;
     if (res == -1 || res == -2) break;                 //packet check finish
-    printf("%u bytes captured\n", header->caplen);
+    //printf("%u bytes captured\n", header->caplen);
 
     //ethernet part	
     printf("Destination Address : %02x %02x %02x %02x %02x %02x\n",packet[0],packet[1],packet[2],packet[3],packet[4],packet[5]);	     
@@ -67,26 +67,26 @@ int main(int argc, char* argv[]) {
 		printf("Payload : ");
 
     //payload part
-		if(payload_len>0)
+		if(payload_len>0)                          //if payload exist
 		{
 			for(count = 0;count < 16; count++)
                 	{
-				if(count >= payload_len) break;
+				if(count >= payload_len) break;     //if payload is less then 16
 				
 	                        printf("%02x ",packet[14+ip_len+tcp_len+count]);
                 	}
 			printf("\n");	
 			
-		}else{printf("No Payload!\n");}
+		}else{printf("No Payload!\n");}            //if payload do not exist 
 		
 			
 	}else
 	{
-	    printf("Only Ethernet & IPv4! Not TCP!\n");
+	    printf("Only Ethernet & IPv4! Not TCP!\n");    // Ethernet - IPv4
         }     
     }else
     {
-	printf("Only Ethernet! Not IPv4!\n");
+	printf("Only Ethernet! Not IPv4!\n");              // Ethernet
     }
     
     printf("---------------------------------------------------------\n");
